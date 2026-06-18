@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(npm install:*)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(rm -rf src/components src/config.js src/App.jsx)",
+      "Bash(rm -f public/ring.svg)",
+      "Bash(cp \"C:/Users/Lenovo/Downloads/wedding-invite/images/curtain-video.mp4\" public/)",
+      "Bash(cp \"C:/Users/Lenovo/Downloads/wedding-invite/images/curtain-open.jpg\" public/)",
+      "mcp__14050375-6885-4dcf-aec7-ed72bac25c6f__create_google_sheet1"
+    ]
+  }
+}

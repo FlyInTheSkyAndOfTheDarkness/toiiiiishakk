@@ -1,0 +1,384 @@
+:root {
+  --paper: #f4ece0;
+  --paper-2: #eadfca;
+  --card: #fbf6ec;
+  --ink: #3a2c2c;
+  --ink-soft: #6f5b48;
+  --wax: #7c2b2b;
+  --wax-2: #9a3a30;
+  --gold: #b08d4f;
+  --gold-soft: #c8a972;
+  --line: rgba(58, 44, 44, 0.18);
+
+  /* Шрифты с поддержкой казахской кириллицы (қ, ң, ү, ұ, ғ, і, ө, һ, ә) */
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --script: 'Caveat', cursive;
+  --sans: 'Montserrat', system-ui, sans-serif;
+
+  --maxw: 980px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* состаренная бумага: тёплые пятна + тонкое волокно */
+  background-image:
+    radial-gradient(120% 90% at 15% 0%, rgba(176, 141, 79, 0.10), transparent 55%),
+    radial-gradient(120% 90% at 90% 100%, rgba(124, 43, 43, 0.07), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+::selection { background: var(--wax); color: var(--card); }
+
+.display { font-family: var(--display); }
+.script { font-family: var(--script); color: var(--wax); }
+.upper { text-transform: uppercase; letter-spacing: 0.22em; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+section { position: relative; }
+
+.pad { padding: clamp(72px, 12vh, 130px) 24px; }
+.center { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.pre {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.sec-title {
+  font-family: var(--script);
+  color: var(--wax);
+  font-size: clamp(2.9rem, 8.5vw, 4.4rem);
+  line-height: 1.05;
+  margin: 10px 0;
+}
+.big-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  letter-spacing: 0.02em;
+}
+
+/* мелкий орнамент-разделитель: ❦ */
+.fleuron {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  color: var(--gold); font-size: 1rem; margin: 8px 0 4px;
+}
+.fleuron::before, .fleuron::after {
+  content: ''; height: 1px; width: 60px;
+  background: linear-gradient(90deg, transparent, var(--line));
+}
+.fleuron::after { transform: scaleX(-1); }
+
+/* subtle reveal on scroll */
+.reveal-up { opacity: 0; transform: translateY(22px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal-up.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════════════════════ */
+/*  ПЕРФОРИРОВАННАЯ МАРКА (переиспользуемая)                 */
+/* ════════════════════════════════════════════════════════ */
+.stamp {
+  --r: 6px;   /* радиус «зубца» */
+  --g: 17px;  /* шаг перфорации */
+  position: relative;
+  background: var(--card);
+  padding: 22px;
+  filter: drop-shadow(0 14px 30px rgba(58, 44, 44, 0.18));
+  -webkit-mask:
+    radial-gradient(var(--r) at 50% 0,    #0000 98%, #000) 0 0 / var(--g) 100%,
+    radial-gradient(var(--r) at 50% 100%, #0000 98%, #000) 0 0 / var(--g) 100%,
+    radial-gradient(var(--r) at 0 50%,    #0000 98%, #000) 0 0 / 100% var(--g),
+    radial-gradient(var(--r) at 100% 50%, #0000 98%, #000) 0 0 / 100% var(--g);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+/* внутренняя рамка марки */
+.stamp__inner {
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line);
+  outline-offset: 4px;
+  padding: clamp(22px, 4vw, 40px);
+  position: relative;
+}
+
+/* почтовое «гашение» (postmark) */
+.postmark {
+  position: absolute;
+  width: 132px; height: 132px;
+  border: 2px solid var(--wax);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--wax);
+  opacity: 0.42;
+  transform: rotate(-14deg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.postmark::before, .postmark::after {
+  content: ''; position: absolute; left: 8px; right: 8px; height: 1px; background: var(--wax);
+}
+.postmark::before { top: 30px; }
+.postmark::after { bottom: 30px; }
+.postmark span {
+  font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.18em;
+  text-transform: uppercase; text-align: center; line-height: 1.5;
+}
+
+/* ════════════════════════════════════════════════════════ */
+/*  ПЕРДЕ (вход, видео-занавес как в референсе)              */
+/* ════════════════════════════════════════════════════════ */
+.curtain {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #2a100d;
+}
+.curtain.open { cursor: default; }
+
+/* видео шторы — целиком (без обрезки), само задаёт высоту секции;
+   после окончания остаётся последний кадр → переход бесшовный */
+.curtain-video {
+  display: block;
+  width: 100%; height: auto;
+  vertical-align: bottom;
+  /* видео в собственный слой → текст над ним не выпадает при скролле */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* театральный ламбрекен (челка) поверх верха шторы */
+.curtain-valance {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 8;
+  height: clamp(84px, 19vw, 160px);
+  background:
+    /* тонкая золотая кайма по нижнему фестонному краю */
+    linear-gradient(180deg, transparent calc(100% - 6px), rgba(184, 142, 71, 0.9) calc(100% - 6px)),
+    /* редкий слой широких складок другого шага → мягкая неоднородность (без тонких линий) */
+    repeating-linear-gradient(90deg,
+      rgba(0, 0, 0, 0.12) 0,
+      rgba(255, 190, 175, 0.16) 18px,
+      rgba(0, 0, 0, 0.12) 37px),
+    /* основные складки: ровное поле + ШИРОКИЙ мягкий тёплый блик на гребне (плавные стопы, без резких линий) */
+    repeating-linear-gradient(90deg,
+      #6d1005 0,
+      #7c1408 7px,
+      #b5685a 13px,
+      #7c1408 19px,
+      #6d1005 26px),
+    /* плотная красная основа — ничего не просвечивает */
+    linear-gradient(180deg, #7a1206, #660f04);
+  -webkit-mask-image: radial-gradient(circle at 50% 100%, transparent 33px, #000 34px);
+  -webkit-mask-size: 84px 100%;
+  -webkit-mask-repeat: repeat-x;
+  -webkit-mask-position: bottom left;
+  mask-image: radial-gradient(circle at 50% 100%, transparent 33px, #000 34px);
+  mask-size: 84px 100%;
+  mask-repeat: repeat-x;
+  mask-position: bottom left;
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+}
+
+.curtain-hint {
+  position: absolute; top: 42vh; left: 0; right: 0; z-index: 15;
+  text-align: center; color: #fff;
+  font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  animation: pulse 2.2s var(--ease) infinite;
+}
+.curtain.playing .curtain-hint, .curtain.open .curtain-hint { display: none; }
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* контент строго в центральном проёме шторы */
+.curtain-content {
+  position: absolute; z-index: 5;
+  /* ниже центра — в широкой нижней части проёма */
+  top: 56%; left: 50%; transform: translate(-50%, -50%) translateY(16px) translateZ(0);
+  width: 80%;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.55s var(--ease) 0.1s, transform 0.55s var(--ease) 0.1s;
+  /* собственный стабильный слой над видео → текст не выпадает при скролле */
+  backface-visibility: hidden;
+}
+.curtain.open .curtain-content { opacity: 1; transform: translate(-50%, -50%) translateZ(0); }
+.curtain.idle .curtain-content, .curtain.playing .curtain-content { visibility: hidden; }
+
+/* имена — крупные, скруглённый шрифт без острых углов */
+.curtain-content .hero__names {
+  font-family: 'Comfortaa', var(--display);
+  font-size: clamp(3rem, 15vw, 10rem); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(248, 244, 236, 0.95), 0 0 12px rgba(248, 244, 236, 0.6);
+}
+.curtain-content .hero__amp {
+  font-family: 'Comfortaa', var(--script);
+  font-size: clamp(1.6rem, 6vw, 4.2rem); font-weight: 500; margin: 0.06em 0;
+}
+
+/* дата под именами — с тонкими линиями по бокам */
+.curtain-date {
+  display: flex; align-items: center; justify-content: center; gap: 3vw;
+  margin-top: clamp(12px, 3vw, 28px);
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(0.7rem, 2.4vw, 1.1rem); letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 0 1px 8px rgba(248, 244, 236, 0.9);
+}
+.curtain-date__line {
+  display: block; height: 1px; width: clamp(20px, 9vw, 64px);
+  background: var(--ink-soft); opacity: 0.6;
+}
+
+/* приглашение на бумаге (Intro) */
+.intro-sec { padding: clamp(48px, 8vh, 90px) 24px; }
+.intro-mono {
+  font-size: clamp(2.4rem, 7vw, 3.6rem); line-height: 1; margin-bottom: 18px;
+}
+.intro-msg {
+  max-width: 460px; margin: 14px auto 0;
+  font-family: var(--display); font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  line-height: 1.8; color: var(--ink-soft);
+}
+
+.curtain-scroll {
+  position: absolute; z-index: 5; left: 50%; top: calc(100svh - 70px);
+  transform: translateX(-50%);
+  color: var(--ink-soft);
+  opacity: 0; transition: opacity 0.5s var(--ease) 0.25s;
+}
+.curtain.open .curtain-scroll { opacity: 1; }
+.curtain.idle .curtain-scroll, .curtain.playing .curtain-scroll { visibility: hidden; }
+
+.hero__intro { margin-bottom: 22px; }
+.hero__names {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(3rem, 13vw, 7rem); line-height: 0.98; letter-spacing: 0.01em;
+}
+.hero__amp { display: block; font-family: var(--script); color: var(--gold); font-size: clamp(2rem, 7vw, 3.4rem); margin: 0.05em 0; }
+.hero__msg { margin: 30px auto 0; max-width: 460px; color: var(--ink-soft); line-height: 1.85; font-size: 1.02rem; }
+.scrollcue {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft);
+}
+.scrollcue svg { animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+/* ════════════════════════════════════════════════════════ */
+/*  ОРНЫ (марка + карта)                                     */
+/* ════════════════════════════════════════════════════════ */
+.venue-stamp { max-width: 560px; width: 100%; margin: 8px auto 0; }
+.map-frame {
+  width: 100%; aspect-ratio: 4 / 3; margin: 22px 0 4px;
+  border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
+  box-shadow: 0 16px 36px rgba(58, 44, 44, 0.18);
+  filter: sepia(0.25) saturate(0.9) brightness(0.98);
+}
+.map-frame iframe { width: 100%; height: 100%; border: 0; }
+.venue-name { font-family: var(--display); font-weight: 500; font-size: clamp(1.7rem, 6vw, 2.6rem); line-height: 1.1; }
+.venue-addr { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); margin: 4px 0; }
+.venue-date { font-family: var(--display); font-style: italic; font-size: clamp(1.2rem, 4vw, 1.6rem); margin: 16px 0; }
+.venue-footer { font-family: var(--script); color: var(--wax); font-size: 1.9rem; margin-top: 6px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 22px;
+  padding: 13px 28px; border: 1px solid var(--wax); border-radius: 999px;
+  color: var(--wax); letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.7rem;
+  text-decoration: none; transition: all 0.4s var(--ease);
+}
+.btn:hover { background: var(--wax); color: var(--card); }
+
+/* ════════════════════════════════════════════════════════ */
+/*  КИІМ ҮЛГІСІ (дресс-код)                                  */
+/* ════════════════════════════════════════════════════════ */
+.dress { max-width: 520px; margin: 0 auto; }
+.dress p { color: var(--ink-soft); line-height: 1.8; margin: 14px auto; max-width: 440px; }
+.dress .big { font-family: var(--display); font-style: italic; font-size: clamp(1.5rem, 5vw, 2rem); margin: 18px 0; }
+.swatches { display: flex; justify-content: center; gap: 14px; margin-top: 18px; }
+.swatch { width: 38px; height: 38px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(58,44,44,.2), 0 6px 14px rgba(58,44,44,.18); }
+
+/* ════════════════════════════════════════════════════════ */
+/*  RSVP                                                     */
+/* ════════════════════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px;
+  background: rgba(124, 43, 43, 0.07); border: 1px solid rgba(124, 43, 43, 0.18);
+  border-radius: 999px; padding: 8px 18px; font-size: 0.66rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--wax);
+}
+.form-card {
+  background: rgba(251, 246, 236, 0.7); border: 1px solid var(--line); border-radius: 12px;
+  padding: clamp(24px, 5vw, 40px); max-width: 540px; width: 100%;
+  display: flex; flex-direction: column; gap: 22px; text-align: left;
+}
+.field label { display: block; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
+.field input, .field textarea {
+  width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 8px;
+  background: rgba(255, 255, 255, 0.6); color: var(--ink);
+  font-family: var(--display); font-size: 1.15rem; transition: border-color 0.3s var(--ease);
+}
+.field input::placeholder, .field textarea::placeholder { color: rgba(111, 91, 72, 0.5); font-style: italic; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--wax); }
+.field textarea { resize: vertical; min-height: 64px; }
+.attend-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.attend-btn {
+  flex: 1; min-width: 140px; padding: 14px; border: 1px solid var(--line); border-radius: 8px;
+  background: rgba(255, 255, 255, 0.6); color: var(--ink-soft);
+  font-size: 0.78rem; letter-spacing: 0.06em; transition: all 0.3s var(--ease);
+}
+.attend-btn.sel { background: var(--wax); color: var(--card); border-color: var(--wax); }
+.submit-btn {
+  padding: 16px; border-radius: 999px; background: var(--wax); color: var(--card);
+  letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.74rem;
+  transition: transform 0.3s var(--ease), background 0.3s;
+}
+.submit-btn:hover { background: var(--wax-2); transform: translateY(-2px); }
+.submit-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+.form-thanks { text-align: center; font-family: var(--script); color: var(--wax); font-size: 1.8rem; padding: 16px 0; }
+
+/* ════════════════════════════════════════════════════════ */
+/*  ЗАКРЫТИЕ (марка с гашением)                              */
+/* ════════════════════════════════════════════════════════ */
+.closing-stamp { max-width: 460px; width: 100%; }
+.closing-title { font-family: var(--script); color: var(--wax); font-size: clamp(2.9rem, 9vw, 4.2rem); line-height: 1.05; }
+.closing-text { color: var(--ink-soft); line-height: 1.8; margin: 18px auto; max-width: 360px; }
+.closing-sign { font-family: var(--display); font-style: italic; font-size: 1.4rem; }
+
+/* ════════════════════════════════════════════════════════ */
+/*  МУЗЫКА                                                   */
+/* ════════════════════════════════════════════════════════ */
+.music-btn {
+  position: fixed; bottom: 22px; right: 22px; z-index: 200;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--wax); color: var(--card);
+  display: grid; place-items: center; box-shadow: 0 4px 10px rgba(92, 31, 28, 0.3);
+  transition: transform 0.3s var(--ease), opacity 0.3s;
+}
+.music-btn:hover { transform: scale(1.08); }
+.music-btn.off { opacity: 0.55; }
+
+/* ════════════════════════════════════════════════════════ */
+/*  RESPONSIVE                                               */
+/* ════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .postmark { width: 104px; height: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto; }
+  .scrollcue svg, .curtain-hint { animation: none; }
+}
