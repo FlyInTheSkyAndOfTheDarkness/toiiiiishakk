@@ -1,15 +1,25 @@
 import { useRef, useState } from 'react'
 import { data } from '../data'
 
-// Кіреберіс перде: басқанда видео ойналады, біткенде ашық штора кадры
-// (толық, кесілмейді) қалады, есімдер ортадағы саңылауда тұрады.
+// Кіреберіс перде: басқанда видео ойналады, видеоның СОҢЫНДА есімдер
+// шыға бастайды (толық бітуін күтпейді), кадр қалады.
 export default function Curtain({ onOpen }) {
   const videoRef = useRef(null)
+  const revealed = useRef(false)
   const [phase, setPhase] = useState('idle') // idle | playing | open
 
   const finish = () => {
+    if (revealed.current) return
+    revealed.current = true
     setPhase('open')
     onOpen()
+  }
+
+  // видео соңғы ~15%-ке жеткенде есімдерді ерте көрсетеміз
+  const onTime = () => {
+    const v = videoRef.current
+    if (!v || !v.duration) return
+    if (v.currentTime / v.duration >= 0.85) finish()
   }
 
   const start = () => {
@@ -30,6 +40,7 @@ export default function Curtain({ onOpen }) {
         muted
         preload="auto"
         poster="/curtain-poster.jpg"
+        onTimeUpdate={onTime}
         onEnded={finish}
       >
         <source src="/curtain-video.mp4" type="video/mp4" />
