@@ -303,23 +303,23 @@ section { position: relative; }
 .event-date { margin-bottom: clamp(20px, 4vh, 36px); width: 100%; max-width: 480px; }
 .event-date__month {
   font-family: var(--display); font-weight: 500; color: var(--ink);
-  font-size: clamp(1.5rem, 5vw, 2.1rem); letter-spacing: 0.02em; margin-bottom: 4px;
+  font-size: clamp(1.9rem, 6.4vw, 2.7rem); letter-spacing: 0.02em; margin-bottom: 6px;
 }
 .event-date__row {
-  display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 22px);
+  display: flex; align-items: center; justify-content: center; gap: clamp(12px, 3.4vw, 26px);
 }
 .event-date__rule { flex: 1; height: 1px; background: var(--line); max-width: 60px; }
 .event-date__side {
   font-family: var(--display); color: var(--ink-soft);
-  font-size: clamp(1.1rem, 3.6vw, 1.45rem); white-space: nowrap;
+  font-size: clamp(1.35rem, 4.6vw, 1.85rem); white-space: nowrap;
 }
 .event-date__day {
   font-family: var(--display); font-weight: 600; color: var(--ink);
-  font-size: clamp(3.4rem, 12vw, 5rem); line-height: 1;
+  font-size: clamp(4.4rem, 15vw, 6.6rem); line-height: 1;
 }
 .event-date__year {
   font-family: var(--display); color: var(--ink-soft);
-  font-size: clamp(1.2rem, 4vw, 1.6rem); margin-top: 4px;
+  font-size: clamp(1.5rem, 5vw, 2.1rem); margin-top: 6px;
 }
 
 /* кері санақ (countdown) */
