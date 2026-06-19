@@ -15,11 +15,11 @@ export default function Curtain({ onOpen }) {
     onOpen()
   }
 
-  // видео соңғы ~15%-ке жеткенде есімдерді ерте көрсетеміз
+  // видео жартысынан асқанда (60%) есімдерді ерте көрсетеміз
   const onTime = () => {
     const v = videoRef.current
     if (!v || !v.duration) return
-    if (v.currentTime / v.duration >= 0.85) finish()
+    if (v.currentTime / v.duration >= 0.6) finish()
   }
 
   const start = () => {
@@ -27,6 +27,7 @@ export default function Curtain({ onOpen }) {
     setPhase('playing')
     const v = videoRef.current
     if (!v) return finish()
+    v.playbackRate = 2 // штора 2 есе жылдам ашылады
     v.play().catch(() => finish())
   }
 
