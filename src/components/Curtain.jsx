@@ -29,6 +29,7 @@ export default function Curtain({ onOpen }) {
         playsInline
         muted
         preload="auto"
+        poster="/curtain-poster.jpg"
         onEnded={finish}
       >
         <source src="/curtain-video.mp4" type="video/mp4" />
