@@ -217,7 +217,7 @@ section { position: relative; }
   width: 80%;
   text-align: center;
   opacity: 0;
-  transition: opacity 0.07s var(--ease), transform 0.07s var(--ease);
+  transition: opacity 0.018s var(--ease), transform 0.018s var(--ease);
   /* собственный стабильный слой над видео → текст не выпадает при скролле */
   backface-visibility: hidden;
   color: var(--ink);
