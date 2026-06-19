@@ -39,6 +39,8 @@ export const data = {
     name: 'Жайрем кенті',
     address: ['Ұлытау облысы', 'Жайрем кенті'],
     datetime: '2026 жылғы 22 тамыз · 16:00',
+    // Той өтетін орын тақырыбының үстіндегі күн блогы
+    eventDate: { month: 'тамыз', weekday: 'сенбі', day: '22', time: '16:00', year: '2026' },
     footer: 'одан кейін — мерекелік дастарқан',
     // Карта: Yandex map widget. Нақты нүкте қою үшін Яндекс.Карта →
     // «Бөлісу» → «Картаны ендіру» → src-ді осында қойыңыз.
@@ -72,6 +74,13 @@ export const data = {
     endpoint: 'https://script.google.com/macros/s/AKfycby64TNc3Ej-F8Ydkw89HI-yShlGctCwtdGOhlawIxoof1D2H1--Tpf_3Fgyepze2VOe/exec',
     thanksYes: 'Рақмет! Сізді асыға күтеміз ♥',
     thanksNo: 'Өкінішті. Хабарлағаныңызға рақмет.',
+  },
+
+  // ─── Кері санақ (countdown) ─────────────────────────────
+  countdown: {
+    pre: 'Тойға дейін',
+    target: '2026-08-22T16:00:00', // той басталатын күн мен уақыт
+    units: { d: 'күн', h: 'сағат', m: 'минут', s: 'секунд' },
   },
 
   // ─── Күнтізбе (calendar) ────────────────────────────────

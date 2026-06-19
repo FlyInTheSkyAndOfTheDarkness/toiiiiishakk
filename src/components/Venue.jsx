@@ -1,11 +1,26 @@
 import { data } from '../data'
 import Reveal from './Reveal'
 import Stamp from './Stamp'
+import Countdown from './Countdown'
 
 export default function Venue() {
   const v = data.venue
+  const ed = v.eventDate
   return (
     <section className="pad center">
+      {/* күн блогы (ай · апта күні · сан · уақыт · жыл) */}
+      <Reveal className="event-date">
+        <div className="event-date__month">{ed.month}</div>
+        <div className="event-date__row">
+          <span className="event-date__rule" />
+          <span className="event-date__side">{ed.weekday}</span>
+          <span className="event-date__day">{ed.day}</span>
+          <span className="event-date__side">{ed.time}</span>
+          <span className="event-date__rule" />
+        </div>
+        <div className="event-date__year">{ed.year}</div>
+      </Reveal>
+
       <Reveal>
         <div className="pre">{v.pre}</div>
         <div className="fleuron">❦</div>
@@ -18,13 +33,17 @@ export default function Venue() {
             {v.address.map((a, i) => (
               <p className="venue-addr" key={i}>{a}</p>
             ))}
-            <p className="venue-date">{v.datetime}</p>
 
             <div className="map-frame">
               <iframe src={v.mapEmbed} title={v.name} loading="lazy" allowFullScreen />
             </div>
           </div>
         </Stamp>
+      </Reveal>
+
+      {/* карта астындағы кері санақ */}
+      <Reveal>
+        <Countdown />
       </Reveal>
     </section>
   )
