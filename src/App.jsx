@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 import Curtain from './components/Curtain'
 import Intro from './components/Intro'
 import Venue from './components/Venue'
-import Dresscode from './components/Dresscode'
+import Calendar from './components/Calendar'
 import Rsvp from './components/Rsvp'
-import Closing from './components/Closing'
 import MusicButton from './components/MusicButton'
 
 export default function App() {
@@ -22,9 +21,8 @@ export default function App() {
       <main>
         <Intro />
         <Venue />
-        <Dresscode />
+        <Calendar />
         <Rsvp />
-        <Closing />
       </main>
 
       <MusicButton start={opened} />

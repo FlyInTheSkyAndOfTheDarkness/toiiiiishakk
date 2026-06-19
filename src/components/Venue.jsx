@@ -23,16 +23,8 @@ export default function Venue() {
             <div className="map-frame">
               <iframe src={v.mapEmbed} title={v.name} loading="lazy" allowFullScreen />
             </div>
-
-            <a className="btn" href={v.mapLink} target="_blank" rel="noreferrer">
-              Бағыт салу →
-            </a>
           </div>
         </Stamp>
-      </Reveal>
-
-      <Reveal>
-        <p className="venue-footer">{v.footer}</p>
       </Reveal>
     </section>
   )
