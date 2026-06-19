@@ -15,11 +15,11 @@ export default function Curtain({ onOpen }) {
     onOpen()
   }
 
-  // видео жартысынан асқанда (60%) есімдерді ерте көрсетеміз
+  // видеоның басына жақын (45%) есімдер баяу шыға бастайды
   const onTime = () => {
     const v = videoRef.current
     if (!v || !v.duration) return
-    if (v.currentTime / v.duration >= 0.6) finish()
+    if (v.currentTime / v.duration >= 0.45) finish()
   }
 
   const start = () => {
