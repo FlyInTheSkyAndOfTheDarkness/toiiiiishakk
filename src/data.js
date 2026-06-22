@@ -37,7 +37,7 @@ export const data = {
   venue: {
     pre: 'Той өтетін орын',
     name: 'Жайрем кенті',
-    address: ['Ұлытау облысы'],
+    address: ['Аldiyar grand hall'],
     datetime: '2026 жылғы 22 тамыз · 19:00',
     // Той өтетін орын тақырыбының үстіндегі күн блогы
     eventDate: { month: 'тамыз', weekday: 'сенбі', day: '22', time: '19:00', year: '2026' },

@@ -20,8 +20,8 @@ export default function App() {
 
       <main>
         <Intro />
-        <Venue />
         <Calendar />
+        <Venue />
         <Rsvp />
       </main>
 
